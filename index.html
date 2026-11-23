@@ -5,39 +5,140 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Active Anatomy Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
 <style>
+:root{--navy:#060B1A;--maroon:#7A2A22;--maroon-d:#5E1F19;--gold:#D9B66A;--page:#FAFAF9;--line:#D5D9E0;--ink:#3B4558}
 *{box-sizing:border-box}
-body{margin:0;background:#FAFAF9;color:#060B1A;font-family:'DM Sans',Arial,sans-serif;font-style:normal;font-size:18px;line-height:1.45}
-.skip{position:absolute;left:-999px;top:0;background:#060B1A;color:#fff;padding:12px 16px}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--page);color:var(--navy);font-family:'DM Sans',Arial,sans-serif;font-style:normal;font-size:18px;line-height:1.5}
+.skip{position:absolute;left:-999px;top:0;background:var(--navy);color:#fff;padding:12px 16px;z-index:10}
 .skip:focus{left:8px;top:8px}
-header{background:#060B1A;color:#fff;padding:40px 20px}
-.wrap{max-width:900px;margin:0 auto}
-.eyebrow{margin:0;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#D9B66A}
-h1{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:clamp(32px,6vw,56px);line-height:1.05;margin:10px 0 0}
-main{padding:28px 20px 48px}
-ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
-li{background:#fff;border:1px solid #C9CED6;border-radius:12px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
-.n{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:44px;color:#7A2A22;line-height:1}
-h2{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:22px;margin:0}
-p{margin:4px 0 0;color:#3B4558}
-a.btn{display:inline-block;min-height:44px;padding:12px 20px;border-radius:8px;background:#7A2A22;color:#fff;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
-a.btn:hover{background:#5E1F19}
-a.btn:focus-visible{outline:3px solid #060B1A;outline-offset:3px}
-@media (max-width:600px){li{grid-template-columns:1fr}}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--maroon)}
+
+/* hero */
+.hero{padding:64px 0 44px;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px;align-items:end}
+h1{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:clamp(46px,8.4vw,112px);line-height:.98;letter-spacing:-.035em;margin:18px 0 0}
+h1 .hl{color:var(--maroon)}
+.lede{margin:22px 0 0;font-size:clamp(18px,1.7vw,22px);color:var(--ink);max-width:34ch}
+.facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+.facts li{padding:18px 14px;text-align:center;border-left:1px solid var(--line)}
+.facts li:first-child{border-left:0}
+.facts b{display:block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:38px;line-height:1;color:var(--maroon)}
+.facts span{display:block;margin-top:6px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+
+/* cards */
+.tools{padding:44px 0 56px}
+.tools h2{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;margin:10px 0 26px}
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 28px 24px;box-shadow:0 1px 3px rgba(0,0,0,.08);min-height:250px}
+.card:hover,.card:focus-within{transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,.10)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.num{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:92px;line-height:.8;letter-spacing:-.04em;color:var(--maroon)}
+.pill{display:inline-block;padding:6px 14px;border:1px solid var(--navy);border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);white-space:nowrap}
+.pill.dark{background:var(--navy);color:#fff}
+.card h3{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:28px;letter-spacing:-.01em;margin:22px 0 6px}
+.card p{margin:0 0 20px;color:var(--ink)}
+.btn{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:13px 22px;border-radius:8px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-decoration:none}
+.btn::after{content:"";position:absolute;inset:0;border-radius:16px}
+.btn .arr{display:inline-block;width:18px;height:2px;background:#fff;position:relative}
+.btn .arr::after{content:"";position:absolute;right:0;top:-4px;width:8px;height:8px;border-top:2px solid #fff;border-right:2px solid #fff;transform:rotate(45deg)}
+.card:nth-child(odd) .btn{background:var(--maroon)}
+.card:nth-child(odd) .btn:hover{background:var(--maroon-d)}
+.card:nth-child(even) .btn:hover{background:#141C33}
+.btn:focus-visible{outline:3px solid var(--navy);outline-offset:4px}
+.card:nth-child(even) .btn:focus-visible{outline-color:var(--maroon)}
+
+/* loop band */
+.band{background:var(--navy);color:#fff;padding:52px 0 58px}
+.band .eyebrow{color:var(--gold)}
+.band h2{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:clamp(28px,3.6vw,46px);letter-spacing:-.02em;line-height:1.08;margin:12px 0 30px}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid #2A3350;border-radius:14px;overflow:hidden}
+.steps li{padding:18px 14px 20px;border-left:1px solid #2A3350}
+.steps li:first-child{border-left:0}
+.steps .k{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--gold)}
+.steps .t{display:block;margin-top:10px;font-weight:700;font-size:16px;line-height:1.25}
+.steps .m{display:block;margin-top:12px;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:30px;line-height:1}
+.steps .m small{font-family:'DM Sans',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#D5DAE6;margin-left:4px}
+.rule{margin:26px 0 0;color:#D5DAE6;max-width:70ch}
+footer{padding:22px 0 34px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;align-items:start}.grid{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}.steps li{border-top:1px solid #2A3350}.steps li:nth-child(odd){border-left:0}}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform 200ms ease,box-shadow 200ms ease}.btn{transition:background-color 150ms ease}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card:hover,.card:focus-within{transform:none}}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to the links</a>
-<header><div class="wrap"><p class="eyebrow">Dr. Sharilyn Rennie</p><h1>Active Anatomy Lab</h1></div></header>
-<main id="main" class="wrap">
-<ul>
-<li><span class="n" aria-hidden="true">01</span><div><h2>Walkthrough slides</h2><p>Lab steps with a timer on each one.</p></div><a class="btn" href="slides.html" target="_top">Open slides</a></li>
-<li><span class="n" aria-hidden="true">02</span><div><h2>Score sheet</h2><p>Table check-offs and points for each class.</p></div><a class="btn" href="score-sheet.html" target="_top">Open score sheet</a></li>
-<li><span class="n" aria-hidden="true">03</span><div><h2>Structure checklists</h2><p>Module 5 lists by topic, with check boxes.</p></div><a class="btn" href="renal-checklists.html" target="_top">Open checklists</a></li>
-<li><span class="n" aria-hidden="true">04</span><div><h2>Run sheet</h2><p>Your own step list with times and a timer. Not for the projector.</p></div><a class="btn" href="run-sheet.html" target="_top">Open run sheet</a></li>
-</ul>
+<a class="skip" href="#tools">Skip to the four pages</a>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">BIO 004 Human Anatomy &middot; Dr. Sharilyn Rennie</p>
+      <h1>Active <span class="hl">Anatomy</span> Lab</h1>
+      <p class="lede">Four pages that run a recall lab from the first structure to the last check-off.</p>
+    </div>
+    <ul class="facts" aria-label="Lab at a glance">
+      <li><b>90</b><span>Minutes</span></li>
+      <li><b>3</b><span>Sets</span></li>
+      <li><b>1</b><span>Point per set</span></li>
+    </ul>
+  </div>
+</header>
+
+<main id="tools" class="tools" tabindex="-1">
+  <div class="wrap">
+    <p class="eyebrow">Open a page</p>
+    <h2>Everything for today&rsquo;s lab</h2>
+    <ul class="grid">
+      <li class="card">
+        <div class="card-top"><span class="num" aria-hidden="true">01</span><span class="pill dark">Projector</span></div>
+        <h3>Walkthrough slides</h3>
+        <p>Each lab step on its own slide, with a timer the room can see.</p>
+        <a class="btn" href="slides.html" target="_top">Open slides <span class="arr" aria-hidden="true"></span></a>
+      </li>
+      <li class="card">
+        <div class="card-top"><span class="num" aria-hidden="true">02</span><span class="pill">Your laptop</span></div>
+        <h3>Score sheet</h3>
+        <p>Table points, list checks and the number wheel, by class day.</p>
+        <a class="btn" href="score-sheet.html" target="_top">Open score sheet <span class="arr" aria-hidden="true"></span></a>
+      </li>
+      <li class="card">
+        <div class="card-top"><span class="num" aria-hidden="true">03</span><span class="pill">Your laptop</span></div>
+        <h3>Structure checklists</h3>
+        <p>Every Module 5 list by topic, side by side, with check boxes.</p>
+        <a class="btn" href="renal-checklists.html" target="_top">Open checklists <span class="arr" aria-hidden="true"></span></a>
+      </li>
+      <li class="card">
+        <div class="card-top"><span class="num" aria-hidden="true">04</span><span class="pill">Your laptop</span></div>
+        <h3>Run sheet</h3>
+        <p>The whole sequence as a list, with clock times and a private timer.</p>
+        <a class="btn" href="run-sheet.html" target="_top">Open run sheet <span class="arr" aria-hidden="true"></span></a>
+      </li>
+    </ul>
+  </div>
 </main>
+
+<section class="band" aria-labelledby="loopH">
+  <div class="wrap">
+    <p class="eyebrow">One set &middot; 25 minutes</p>
+    <h2 id="loopH">The loop every set follows</h2>
+    <ol class="steps">
+      <li><span class="k">01</span><span class="t">Watch and listen</span><span class="m">5<small>min</small></span></li>
+      <li><span class="k">02</span><span class="t">List from memory</span><span class="m">2<small>min</small></span></li>
+      <li><span class="k">03</span><span class="t">Compare lists</span><span class="m">2<small>min</small></span></li>
+      <li><span class="k">04</span><span class="t">Flip and rewrite</span><span class="m">2<small>min</small></span></li>
+      <li><span class="k">05</span><span class="t">Hear the name, point to it</span><span class="m">5<small>min</small></span></li>
+      <li><span class="k">06</span><span class="t">Point to it, say the name</span><span class="m">5<small>min</small></span></li>
+      <li><span class="k">07</span><span class="t">Fix the misses</span><span class="m">4<small>min</small></span></li>
+    </ol>
+    <p class="rule">A table shows its lists to get the key, passes the table check to earn the point, and passes each set before the next one is checked.</p>
+  </div>
+</section>
+
+<footer><div class="wrap">Active Anatomy Lab &middot; Fall 2026</div></footer>
+
 <script>
 (function(){function s(){try{window.parent.postMessage({id:'active-anatomy-lab',type:'resize',height:document.documentElement.scrollHeight},'*');}catch(e){}}
 window.addEventListener('load',s);window.addEventListener('resize',s);if(window.ResizeObserver){new ResizeObserver(s).observe(document.body);}})();
