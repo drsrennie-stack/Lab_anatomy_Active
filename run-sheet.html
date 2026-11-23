@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab Run Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#060B1A;--navy2:#1E3D4C;--tint:#EDF1F3;--maroon:#7A2A22;--maroon-d:#5E1F19;--gold:#B8924A;--page:#FAFAF9;--line:#C9CED6;--muted:#3B4558}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--navy);font-family:'DM Sans',Arial,sans-serif;font-style:normal;font-size:15px;line-height:1.35}
+.skip{position:absolute;left:-999px;top:0;background:var(--navy);color:#fff;padding:12px 16px;z-index:10}
+.skip:focus{left:8px;top:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--maroon);outline-offset:2px}
+header{background:var(--navy);color:#fff;padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px}
+header :focus-visible{outline-color:#fff}
+h1{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:22px;margin:0}
+.opts{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;font-weight:700}
+.opts label{display:flex;align-items:center;gap:6px}
+select,input[type=time]{font:inherit;min-height:32px;padding:3px 8px;border-radius:8px;border:1px solid #8A93A8;background:#fff;color:var(--navy)}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold)}
+main{display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:14px;padding:12px 14px;align-items:start}
+.now{position:sticky;top:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);text-align:center}
+.eyebrow{margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--maroon)}
+.stepname{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:22px;margin:4px 0 0;line-height:1.15}
+.cue{margin:6px 0 0;color:var(--muted);min-height:1.35em}
+.time{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-weight:800;font-size:76px;line-height:1;margin:12px 0 4px;font-variant-numeric:tabular-nums}
+.time.last,.time.done{color:var(--maroon)}
+.bar{height:10px;border-radius:5px;background:#D9DCE2;overflow:hidden}
+.bar div{height:100%;width:100%;background:var(--navy);transform-origin:left}
+.bar.last div{background:var(--maroon)}
+.state{margin:8px 0 12px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+button{font:inherit;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;min-height:40px;padding:8px 14px;border-radius:8px;border:2px solid transparent;color:#fff;cursor:pointer}
+.b-navy{background:var(--navy)}.b-maroon{background:var(--maroon)}.b-maroon:hover{background:var(--maroon-d)}
+.b-line{background:#fff;color:var(--navy);border-color:var(--navy)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.pace{margin:12px 0 0;font-weight:700}
+.pace.behind{color:var(--maroon)}
+.next{margin:6px 0 0;color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+caption{text-align:left;font-weight:700;padding:0 6px 6px;color:var(--muted);font-size:13px}
+th,td{padding:5px 10px;text-align:left;border-bottom:1px solid #E4E7EC;vertical-align:middle}
+thead th{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:#F1F3F5}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.group td{background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px}
+tr.step button{background:none;border:0;color:var(--navy);padding:0;min-height:26px;text-transform:none;letter-spacing:0;font-size:15px;font-weight:700;text-align:left}
+tr.done td{color:#5A6478}tr.done button{color:#5A6478;font-weight:500}
+tr.cur td{background:var(--tint)}tr.cur td:first-child{box-shadow:inset 4px 0 0 var(--maroon)}
+td.cuecol{color:var(--muted);font-size:13px}
+@media (max-width:820px){main{grid-template-columns:1fr}.now{position:static}.time{font-size:60px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#seq">Skip to the sequence</a>
+<header>
+  <h1>Lab Run Sheet</h1>
+  <div class="opts">
+    <label for="start">Lab starts <input type="time" id="start"></label>
+    <label for="sets">Sets <select id="sets"><option>1</option><option>2</option><option selected>3</option><option>4</option></select></label>
+    <label for="auto"><input type="checkbox" id="auto" checked> Go to the next step by itself</label>
+    <label for="sound"><input type="checkbox" id="sound"> Sound at zero</label>
+  </div>
+</header>
+<main>
+  <section class="now" aria-labelledby="nowH">
+    <p class="eyebrow" id="where"></p>
+    <h2 class="stepname" id="nowH"></h2>
+    <p class="cue" id="cue"></p>
+    <div class="time" id="time" aria-hidden="true"></div>
+    <div class="bar" id="bar"><div id="fill"></div></div>
+    <p class="state" id="state"></p>
+    <div class="btns">
+      <button class="b-navy" id="go" type="button">Start</button>
+      <button class="b-maroon" id="next" type="button">Next step</button>
+      <button class="b-line" id="prev" type="button">Back</button>
+      <button class="b-line" id="reset" type="button">Reset step</button>
+    </div>
+    <p class="pace" id="pace"></p>
+    <p class="next" id="upnext"></p>
+  </section>
+  <section id="seq" aria-label="Sequence" tabindex="-1">
+    <table>
+      <caption id="cap"></caption>
+      <thead><tr><th scope="col">Step</th><th scope="col" class="num">Min</th><th scope="col" class="num">Starts</th><th scope="col">Your cue</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+</main>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var LOOP=[
+    ['Teach: point and name',5,'Hands empty. Point to each structure and name it.'],
+    ['List from memory, alone',2,'No talking. Every structure they can recall.'],
+    ['Compare lists',2,'Tables show you lists. Hand out the key.'],
+    ['Flip and rewrite',2,'Full list, alone. This is the ticket to the check.'],
+    ['Round table: hear the name, point',5,'Check-offs open at the front.'],
+    ['Round table: point, say the name',5,'Check-offs still open.'],
+    ['Fix the misses',4,'Atlas open. Last call for this set.']
+  ];
+  var steps=[],i=0,left=0,running=false,end=0,raf=0,audio=null,began=null;
+  function $(id){return document.getElementById(id);}
+  function pad(n){return (n<10?'0':'')+n;}
+  function fmt(s){s=Math.ceil(Math.max(s,0));return Math.floor(s/60)+':'+pad(s%60);}
+  function build(){
+    var n=parseInt($('sets').value,10);steps=[];
+    steps.push({g:'Open',n:'Open: materials, rules, table check',m:10,c:'Atlas closed. Paper and pen. You hold the key.'});
+    for(var s=1;s<=n;s++)LOOP.forEach(function(L,k){steps.push({g:'Set '+s,n:L[0],m:L[1],c:(k===0&&s>1?'First: name 3 from set '+(s-1)+'. ':'')+L[2]});});
+    steps.push({g:'Wrap up',n:'Wrap up: finish check-offs, confirm points',m:5,c:'Early finishers do a mixed review.'});
+    var t=0;steps.forEach(function(x){x.at=t;t+=x.m;});steps.total=t;
+  }
+  function startMin(){var v=$('start').value.split(':');return v.length===2?(+v[0])*60+(+v[1]):null;}
+  function clock(min){var b=startMin();if(b===null)return '+'+min;var t=(b+min)%1440,h=Math.floor(t/60),m=t%60,ap=h>=12?'pm':'am';h=h%12||12;return h+':'+pad(m)+' '+ap;}
+  function drawRows(){
+    var tb=$('rows'),g='';tb.textContent='';
+    steps.forEach(function(x,k){
+      if(x.g!==g){g=x.g;var gr=document.createElement('tr');gr.className='group';var gd=document.createElement('td');gd.colSpan=4;gd.textContent=g;gr.appendChild(gd);tb.appendChild(gr);}
+      var tr=document.createElement('tr');tr.className='step'+(k<i?' done':'')+(k===i?' cur':'');
+      var th=document.createElement('td'),b=document.createElement('button');b.type='button';b.textContent=x.n;b.setAttribute('aria-label','Go to: '+x.g+', '+x.n);
+      if(k===i)b.setAttribute('aria-current','step');
+      b.addEventListener('click',function(){jump(k);});th.appendChild(b);tr.appendChild(th);
+      var m=document.createElement('td');m.className='num';m.textContent=x.m;tr.appendChild(m);
+      var a=document.createElement('td');a.className='num';a.textContent=clock(x.at);tr.appendChild(a);
+      var c=document.createElement('td');c.className='cuecol';c.textContent=x.c;tr.appendChild(c);
+      tb.appendChild(tr);
+    });
+    $('cap').textContent='Planned length: '+steps.total+' minutes'+(startMin()!==null?', ending at '+clock(steps.total):'')+'. Click a step to jump to it.';
+  }
+  function paint(){
+    var x=steps[i],done=left<=0;
+    $('where').textContent=x.g+' · step '+(i+1)+' of '+steps.length;
+    $('nowH').textContent=x.n;$('cue').textContent=x.c;
+    $('time').textContent=fmt(left);$('time').className='time'+(done?' done':left<=30?' last':'');
+    $('fill').style.transform='scaleX('+Math.max(left,0)/(x.m*60)+')';$('bar').className='bar'+(left<=30?' last':'');
+    $('state').textContent=done?'Time is up':running?'Running':(left<x.m*60?'Paused':x.m+' minutes');
+    $('go').textContent=running?'Pause':(left<x.m*60&&!done?'Resume':'Start');$('go').disabled=done;
+    $('prev').disabled=i===0;$('next').disabled=i===steps.length-1;
+    $('upnext').textContent=i<steps.length-1?'Next: '+steps[i+1].n+' ('+steps[i+1].m+' min)':'Last step.';
+    var b=startMin(),p=$('pace');
+    if(b===null){p.textContent='';return;}
+    var d=new Date(),nowMin=d.getHours()*60+d.getMinutes()+d.getSeconds()/60,planned=b+x.at+(x.m-left/60),diff=Math.round(nowMin-planned);
+    if(Math.abs(diff)>600){p.textContent='';return;}
+    p.className='pace'+(diff>1?' behind':'');
+    p.textContent=diff>1?diff+' min behind the plan':diff<-1?(-diff)+' min ahead of the plan':'On time';
+  }
+  function load(k,keep){i=k;left=steps[i].m*60;if(!keep){running=false;cancelAnimationFrame(raf);}drawRows();paint();}
+  function jump(k){cancelAnimationFrame(raf);running=false;load(k);$('live').textContent=steps[k].g+', '+steps[k].n;}
+  function tick(){
+    if(!running)return;left=(end-performance.now())/1000;
+    if(left<=0){left=0;chime();
+      if($('auto').checked&&i<steps.length-1){i++;left=steps[i].m*60;end=performance.now()+left*1000;drawRows();$('live').textContent='Now: '+steps[i].g+', '+steps[i].n;paint();raf=requestAnimationFrame(tick);return;}
+      running=false;$('live').textContent='Time is up';paint();return;}
+    paint();raf=requestAnimationFrame(tick);
+  }
+  function toggle(){
+    if(left<=0)return;
+    if(running){running=false;cancelAnimationFrame(raf);$('live').textContent='Paused';}
+    else{if($('sound').checked){try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();}catch(e){}}
+      running=true;end=performance.now()+left*1000;$('live').textContent='Started';raf=requestAnimationFrame(tick);}
+    paint();
+  }
+  function chime(){
+    if(!$('sound').checked)return;
+    try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();[0,0.4].forEach(function(t){var o=audio.createOscillator(),g=audio.createGain();o.frequency.value=880;
+      g.gain.setValueAtTime(0.0001,audio.currentTime+t);g.gain.exponentialRampToValueAtTime(0.3,audio.currentTime+t+0.03);g.gain.exponentialRampToValueAtTime(0.0001,audio.currentTime+t+0.3);
+      o.connect(g);g.connect(audio.destination);o.start(audio.currentTime+t);o.stop(audio.currentTime+t+0.35);});}catch(e){}
+  }
+  $('go').addEventListener('click',toggle);
+  $('next').addEventListener('click',function(){if(i<steps.length-1){var r=running;cancelAnimationFrame(raf);i++;left=steps[i].m*60;if(r){end=performance.now()+left*1000;raf=requestAnimationFrame(tick);}drawRows();paint();$('live').textContent='Now: '+steps[i].n;}});
+  $('prev').addEventListener('click',function(){if(i>0)jump(i-1);});
+  $('reset').addEventListener('click',function(){jump(i);});
+  $('sets').addEventListener('change',function(){build();jump(Math.min(i,steps.length-1));});
+  $('start').addEventListener('change',function(){try{localStorage.setItem('lab-run-start',$('start').value);}catch(e){}drawRows();paint();});
+  document.addEventListener('keydown',function(ev){var t=ev.target.tagName;if(ev.key===' '&&t!=='BUTTON'&&t!=='INPUT'&&t!=='SELECT'){ev.preventDefault();toggle();}});
+  (function(){var v='';try{v=localStorage.getItem('lab-run-start')||'';}catch(e){}if(!v){var d=new Date();v=pad(d.getHours())+':'+pad(d.getMinutes());}$('start').value=v;})();
+  setInterval(function(){if(!running)paint();},15000);
+  function send(){try{window.parent.postMessage({id:'lab-run-sheet',type:'resize',height:document.documentElement.scrollHeight},'*');}catch(e){}}
+  window.addEventListener('load',send);window.addEventListener('resize',send);
+  if(window.ResizeObserver){new ResizeObserver(send).observe(document.body);}
+  build();load(0);
+})();
+</script>
+</body>
+</html>
